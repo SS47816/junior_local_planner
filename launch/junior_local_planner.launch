@@ -1,0 +1,103 @@
+<launch> 
+
+    <!-- <env name="ROSCONSOLE_CONFIG_FILE" value="$(find junior_local_planner)/custom_rosconsole.conf"/> -->
+
+    <!-- ****** Global Parameters ****** -->
+    <param name="/use_sim_time" value="true"/>
+
+    <!-- ****** Stage Simulator ****** -->
+    <node pkg="stage_ros" type="stageros" name="stageros" args="$(find junior_local_planner)/stage/empty.world">
+        <remap from="base_scan" to="scan"/>
+    </node>
+
+    <!-- ****** Obstacle Detector ****** -->
+    <include file="$(find obstacle_detector)/launch/nodes.launch" />
+
+    <!-- ****** Local Planner Node ***** -->
+    <node pkg="junior_local_planner" type="junior_local_planner" name="junior_local_planner" output="screen">
+        <param name="odom_topic"                        value="/odom" />
+        <param name="obstacles_topic"                    value="/obstacles" />
+        <param name="global_path_topic"                 value="/global_path" />
+        
+        <param name="global_path_rviz_topic"            value="/global_path_rviz" />
+        <param name="extracted_path_rviz_topic"         value="/extracted_path_rviz" />
+        <param name="current_pose_rviz_topic"           value="/current_pose_rviz" />
+        <param name="roll_outs_rviz_topic"              value="/roll_outs_rviz" />
+        <param name="weighted_trajectories_rviz_topic"  value="/weighted_trajectories_rviz" />
+        <param name="safety_box_rviz_topic"             value="/safety_box_rviz" />
+        <param name="car_footprint_rviz_topic"          value="/car_footprint_rviz" />
+        <param name="box_obstacle_rviz_topic"           value="/box_obstacle_rviz" />
+        <param name="cmd_vel_topic"                     value="/cmd_vel" />
+
+        <param name="planning_frequency"                value="1" />
+
+        <param name="max_speed"                         value="2" />
+        <param name="max_local_plan_distance"           value="12" />
+        <param name="path_density"                      value="0.3" />
+        <param name="roll_outs_number"                  value="8" />
+        <param name="sampling_tip_margin"               value="1.2" />
+        <param name="sampling_out_margin"               value="5" />
+        <param name="roll_out_density"                  value="0.3" />
+        <param name="roll_in_speed_factor"              value="0.2" />
+        <param name="roll_in_margin"                    value="6" />
+        <param name="lane_change_speed_factor"          value="0.5" />
+        <param name="horizon_distance"                  value="15" />
+
+        <param name="horizontal_safety_distance"        value="0.3" />
+        <param name="vertical_safety_distance"          value="0.3" />
+        <param name="max_steer_angle"                   value="0.5" />
+        <param name="min_speed"                         value="0.2" />
+        <param name="lateral_skip_distance"             value="10" />
+
+        <param name="min_following_distance"            value="5" />
+        <param name="max_following_distance"            value="10" />
+        <param name="min_distance_to_avoid"             value="8" />
+
+        <param name="vehicle_width"                     value="1.25" />
+        <param name="vehicle_length"                    value="1.8" />
+        <param name="wheelbase_length"                  value="1.006" />
+        <param name="turning_radius"                    value="1.5" />
+        <param name="safety_radius"                     value="1.5" />
+
+        <param name="smooth_data_weight"                value="0.45" /> <!--0.45-->
+        <param name="smooth_weight"                     value="0.4" /> <!--0.4-->
+        <param name="smooth_tolerance"                  value="0.1" />
+
+        <param name="priority_weight"                   value="0.9" />
+        <param name="transition_weight"                 value="0.9" />
+        <param name="lat_weight"                        value="1.5" />
+        <param name="long_weight"                       value="1" />
+        <param name="collision_weight"                  value="2" />
+        <param name="curvature_weight"                  value="1.2" />
+    </node>
+
+    <!-- ****** Map ***** -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find junior_local_planner)/maps/empty.yaml" output="screen">
+        <param name="frame_id" value="map"/>
+    </node> 
+
+    <!-- ****** AMCL ***** -->
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <!-- <param name="initial_pose_x"        value="8.0"/> 
+        <param name="initial_pose_y"        value="21.5"/>   
+        <param name="initial_pose_a"        value="0"/>   -->
+        <param name="initial_pose_x"        value="13.5"/> 
+        <param name="initial_pose_y"        value="21"/>  
+        <param name="initial_pose_a"        value="-1.570796"/> 
+        <param name="odom_model_type"       value="diff"/>
+        <param name="use_map_topic"         value="true"/>
+        <param name="transform_tolerance"   value="0.5"/>
+    </node>
+
+    <!-- ****** Rviz ***** -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find junior_local_planner)/rviz/junior.rviz" />
+
+    <!-- ****** Publish Global Path ***** -->
+    <node pkg="waypoint_publisher" type="waypoint_publisher" name="waypoint_publisher" output="screen">
+        <param name="waypoint_topic" value="waypoint_topic"/>
+        <param name="global_path_topic" value="global_path"/>
+        <param name="planning_frequency" value="1"/>
+    </node>
+
+
+</launch>

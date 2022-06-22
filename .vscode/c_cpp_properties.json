@@ -1,0 +1,42 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/ss/planner_ws/devel/include/**",
+        "/opt/carla-ros-bridge/melodic/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/ss/planner_ws/src/common/amathutils_lib/include/**",
+        "/home/ss/planner_ws/src/detected_objects_visualizer/include/**",
+        "/home/ss/planner_ws/src/fiss_planner/include/**",
+        "/home/ss/planner_ws/src/frenet_optimal_planner/include/**",
+        "/opt/ros/melodic/share/julius/include/**",
+        "/home/ss/planner_ws/src/junior_local_planner/include/**",
+        "/home/ss/planner_ws/src/common/lanelet2_core/include/**",
+        "/home/ss/planner_ws/src/common/lanelet2_extension/include/**",
+        "/home/ss/planner_ws/src/lgsvl_utils/include/**",
+        "/home/ss/planner_ws/src/common/libwaypoint_follower/include/**",
+        "/home/ss/planner_ws/src/lidar_obstacle_detector/include/**",
+        "/home/ss/planner_ws/src/common/map_file/include/**",
+        "/home/ss/planner_ws/src/mission_planner/include/**",
+        "/home/ss/planner_ws/src/ndt_localizer/include/**",
+        "/home/ss/planner_ws/src/op_global_planner/include/**",
+        "/home/ss/planner_ws/src/common/op_planner/include/**",
+        "/home/ss/planner_ws/src/common/op_ros_helpers/include/**",
+        "/home/ss/planner_ws/src/common/op_simu/include/**",
+        "/home/ss/planner_ws/src/common/op_utility/include/**",
+        "/home/ss/planner_ws/src/common/vector_map/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}
